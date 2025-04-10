@@ -14,7 +14,7 @@ const AmostraGratis: NextPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center py-2">
       <Head>
-        <title>Amostra Grátis</title>
+        <title>AMOSTRAS GRÁTIS</title>
         <meta
           name="description"
           content="Amostra grátis do site Caça Atividades Escolares"

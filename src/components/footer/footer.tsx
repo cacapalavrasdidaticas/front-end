@@ -78,12 +78,15 @@ const Footer = () => {
       <div className="w-full pt-8 flex justify-around items-center">
         <div className="flex w-full items-center flex-col">
           <span className="text-sm">
-            &copy; 2023 Caça Palavras Didáticos. Todos os direitos reservados.
+            &copy; 2025 Caça Atividades Escolares. Todos os direitos reservados.
           </span>
         </div>
         <div className="flex items-center w-full flex-col">
           <div className="flex items-start flex-row gap-4 ">
-            <Link href="https://www.facebook.com/groups/3122508304471779/?ref=share" className="mr-3">
+            <Link
+              href="https://www.facebook.com/groups/3122508304471779/?ref=share"
+              className="mr-3"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -111,7 +114,10 @@ const Footer = () => {
                 />
               </svg>
             </Link> */}
-            <Link href="https://www.instagram.com/cacapalavrasdidaticos/" className="ml-3">
+            <Link
+              href="https://www.instagram.com/cacapalavrasdidaticos/"
+              className="ml-3"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -133,6 +139,38 @@ const Footer = () => {
                 />
               </svg>
             </Link>
+            {/* Botão flutuante do WhatsApp */}
+            <a
+              href="https://wa.me/5531994716920"
+              className="whatsapp-button"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                src="https://cdn-icons-png.flaticon.com/512/733/733585.png"
+                alt="WhatsApp"
+                width={300}
+                height={300}
+                style={{ width: 40, height: 40 }}
+              />
+            </a>
+
+            <style jsx>{`
+              .whatsapp-button {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: #ffffff;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                z-index: 9999;
+              }
+            `}</style>
           </div>
         </div>
       </div>

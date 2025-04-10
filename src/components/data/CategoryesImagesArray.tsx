@@ -21,11 +21,6 @@ import Sociologia from "@/images/imagesCategoryes/Sociologia.png";
 
 export const categories = [
   {
-    name: "Novo Ensino Médio",
-    path: "/categories?category=Novo%20Ensino%20Médio",
-    image: EnsinoMedio,
-  },
-  {
     name: "Alfabetização",
     path: "/categories?category=Alfabetização",
     image: Alfabetizacao,
@@ -44,6 +39,11 @@ export const categories = [
     image: EducacaoFisica,
   },
   {
+    name: "Eletiva",
+    path: "/categories?category=Eletiva",
+    image: ProjetoVida,
+  },
+  {
     name: "Ensino Religioso",
     path: "/categories?category=Ensino%20Religioso",
     image: EnsinoReligioso,
@@ -60,7 +60,6 @@ export const categories = [
     image: Geografia,
   },
   { name: "História", path: "/categories?category=História", image: Historia },
-
   { name: "Inglês", path: "/categories?category=Inglês", image: Ingles },
   {
     name: "Língua Portuguesa",
@@ -72,16 +71,15 @@ export const categories = [
     path: "/categories?category=Matemática",
     image: Matematica,
   },
-
+  {
+    name: "Novo Ensino Médio",
+    path: "/categories?category=Novo%20Ensino%20Médio",
+    image: EnsinoMedio,
+  },
   { name: "Química", path: "/categories?category=Química", image: Quimica },
   {
     name: "Sociologia",
     path: "/categories?category=Sociologia",
     image: Sociologia,
-  },
-  {
-    name: "Eletiva",
-    path: "/categories?category=Eletiva",
-    image: ProjetoVida,
   },
 ];

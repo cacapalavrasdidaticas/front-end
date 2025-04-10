@@ -36,7 +36,7 @@ const NavBar = () => {
             href="/Free"
             aria-current="page"
           >
-            Amostra Grátis
+            Amostras Grátis
           </Link>
           {/* <span className="text-gray-300">|</span> */}
           {/* <Link
