@@ -40,6 +40,7 @@ const Login = () => {
       loginSendEmail({ email: loginData.email });
       toast.success("Código enviado para o seu e-mail!");
       setIsSubmitting(false);
+      console.log(showCodeModal);
     } else if (response && response.status === 401) {
       toast.error(response.data.error || "Acesso não autorizado.");
       setIsSubmitting(false);
@@ -85,12 +86,7 @@ const Login = () => {
             value={loginData.senha}
             onChange={handleChange}
           />
-          <ChangePasswordModal
-            bg=""
-            color="black"
-            title="Esqueceu a sua senha?"
-            subtitle="Preencha os campos abaixo para recuperar."
-          />
+
           <button
             type="submit"
             disabled={isSubmitting}
@@ -99,6 +95,12 @@ const Login = () => {
             {isSubmitting ? "Enviando código..." : "Entrar"}
           </button>
         </form>
+        <ChangePasswordModal
+          bg=""
+          color="black"
+          title="Esqueceu a sua senha?"
+          subtitle="Preencha os campos abaixo para recuperar."
+        />
       </div>
 
       <div className="m-4 p-8 bg-white shadow-md rounded-xl w-full max-w-md border border-black">
@@ -132,7 +134,7 @@ const Login = () => {
       </div>
 
       {/* Renderiza o modal para o código se o primeiro passo foi concluído */}
-      {showCodeModal && (
+      {showCodeModal === true && (
         <TwoStepLoginModal
           email={loginData.email}
           onSuccess={handleLoginSuccess}
