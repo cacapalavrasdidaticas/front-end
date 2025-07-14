@@ -55,6 +55,7 @@ const Subscribe = () => {
         telefoneCelular: accountData.telefoneCelular.replace(/\D/g, ""),
       };
       const response = await createAccount(cleanData);
+      alert(response);
       if (response.message === 'Conta criada com sucesso') {
         toast.success("Conta criada com sucesso!");
         window.location.href = "/Login";
@@ -62,6 +63,7 @@ const Subscribe = () => {
         toast.error(response.message || "");
       }
     } catch (error) {
+      alert(error);
       console.error("Failed to create account:", error);
       toast.error("Falha ao criar a conta. Por favor, tente novamente.");
     }
