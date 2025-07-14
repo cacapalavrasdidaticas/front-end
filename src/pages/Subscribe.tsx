@@ -65,7 +65,7 @@ const Subscribe = () => {
     } catch (error) {
       alert(error);
       console.error("Failed to create account:", error);
-      toast.error("Falha ao criar a conta. Por favor, tente novamente.");
+      toast.error("Falha ao criar a conta. Por favor, tente novamente. Ref:" + error);
     }
   };
 
