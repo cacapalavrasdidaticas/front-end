@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { degrees, PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import { getProductByIdFromPdf } from "@/pages/api/LIbraryApi";
@@ -36,9 +36,20 @@ const PdfCardComponent: React.FC<PdfCardProps> = ({
   userName,
   userCPF,
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
   const [enteredPassword, setEnteredPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+
+  // Limpa a URL do blob quando o componente for desmontado
+  useEffect(() => {
+    return () => {
+      if (pdfUrl) {
+        URL.revokeObjectURL(pdfUrl);
+      }
+    };
+  }, [pdfUrl]);
 
   const handlePdfClick = async () => {
     const lastFourDigits = userCPF.slice(-4);
@@ -75,48 +86,17 @@ const PdfCardComponent: React.FC<PdfCardProps> = ({
         });
       });
 
-      // Salva as alterações no PDF e gera um Blob
+      // Salva as alterações no PDF e gera um Blob para exibição
       const updatedPdfBytes = await pdfDoc.save();
       const pdfBlob = new Blob([updatedPdfBytes], { type: "application/pdf" });
 
-      // Converte o Blob para base64 para enviar à API de criptografia
-      const reader = new FileReader();
-      reader.readAsDataURL(pdfBlob);
-      reader.onloadend = async () => {
-        const resultStr = reader.result?.toString();
-        if (!resultStr) return;
-        // Remove o header "data:application/pdf;base64,"
-        const base64data = resultStr.split(",")[1];
-
-        // Envia o PDF para a rota de API que aplica a criptografia (HummusJS no backend)
-        const encryptionResponse = await fetch("/api/encrypt-pdf", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            pdfBase64: base64data,
-            password: lastFourDigits,
-          }),
-        });
-
-        const encryptionResult = await encryptionResponse.json();
-
-        if (encryptionResponse.ok) {
-          // Força o download do PDF criptografado
-          const encryptedPdfBase64 = encryptionResult.pdfEncryptedBase64;
-          const linkSource = `data:application/pdf;base64,${encryptedPdfBase64}`;
-          const downloadLink = document.createElement("a");
-          downloadLink.href = linkSource;
-          downloadLink.download = `${title}-criptografado.pdf`;
-          document.body.appendChild(downloadLink);
-          downloadLink.click();
-          document.body.removeChild(downloadLink);
-        } else {
-          toast.error(encryptionResult.message);
-        }
-        setLoading(false);
-      };
-
-      setIsModalOpen(false);
+      // Cria uma URL do blob para exibir o PDF no modal (sem criptografia para permitir visualização)
+      const url = URL.createObjectURL(pdfBlob);
+      setPdfUrl(url);
+      setIsPasswordModalOpen(false);
+      setEnteredPassword("");
+      setIsPdfModalOpen(true);
+      setLoading(false);
     } catch (error) {
       console.error("Erro ao gerar PDF:", error);
       toast.error("Ocorreu um erro ao gerar o PDF.");
@@ -142,8 +122,11 @@ const PdfCardComponent: React.FC<PdfCardProps> = ({
           {title}
         </p>
 
-        {/* Botão para abrir o modal */}
-        <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        {/* Botão para abrir o modal de senha */}
+        <Dialog
+          open={isPasswordModalOpen}
+          onOpenChange={setIsPasswordModalOpen}
+        >
           <DialogTrigger asChild>
             <button className="mt-3 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
               Ver PDF
@@ -165,6 +148,11 @@ const PdfCardComponent: React.FC<PdfCardProps> = ({
               maxLength={4}
               value={enteredPassword}
               onChange={(e) => setEnteredPassword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !loading) {
+                  handlePdfClick();
+                }
+              }}
             />
             <DialogFooter className="flex justify-end mt-4">
               <button
@@ -175,13 +163,60 @@ const PdfCardComponent: React.FC<PdfCardProps> = ({
                 {loading ? "Processando..." : "Confirmar"}
               </button>
               <button
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => {
+                  setIsPasswordModalOpen(false);
+                  setEnteredPassword("");
+                }}
                 className="ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
                 disabled={loading}
               >
                 Cancelar
               </button>
             </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Modal para visualizar o PDF */}
+        <Dialog
+          open={isPdfModalOpen}
+          onOpenChange={(open) => {
+            setIsPdfModalOpen(open);
+            if (!open && pdfUrl) {
+              URL.revokeObjectURL(pdfUrl);
+              setPdfUrl(null);
+            }
+          }}
+        >
+          <DialogContent
+            className="p-0 bg-white rounded-lg shadow-lg max-w-[70vw] w-full max-h-[95vh] select-none"
+            onContextMenu={(e) => e.preventDefault()}
+            style={{ userSelect: "none", WebkitUserSelect: "none" }}
+          >
+            <DialogHeader className="p-6 pb-2">
+              <DialogTitle className="text-lg font-semibold">
+                {title}
+              </DialogTitle>
+            </DialogHeader>
+            <div
+              className="flex-1 overflow-hidden p-6 pt-2 select-none"
+              onContextMenu={(e) => e.preventDefault()}
+              style={{ userSelect: "none", WebkitUserSelect: "none" }}
+            >
+              {pdfUrl && (
+                <iframe
+                  src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=1`}
+                  className="w-full  h-[80vh] border-0 select-none"
+                  title="PDF Viewer"
+                  style={{
+                    pointerEvents: "auto",
+                    userSelect: "none",
+                    WebkitUserSelect: "none",
+                  }}
+                  onContextMenu={(e) => e.preventDefault()}
+                />
+              )}
+            </div>
+            
           </DialogContent>
         </Dialog>
       </div>

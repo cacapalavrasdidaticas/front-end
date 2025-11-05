@@ -8,6 +8,7 @@ const Users = dynamic(() => import("@/components/AdminComponents/Users"));
 const Products = dynamic(() => import("@/components/AdminComponents/Products"));
 const Finance = dynamic(() => import("@/components/AdminComponents/Finance"));
 const Banners = dynamic(() => import("@/components/AdminComponents/Banners"));
+const Leads = dynamic(() => import("@/components/AdminComponents/Leads"));
 
 const Admin = () => {
   const [activeComponent, setActiveComponent] = useState("Users");
@@ -38,6 +39,8 @@ const Admin = () => {
         return <Finance />;
       case "Banners":
         return <Banners />;
+      case "Leads":
+        return <Leads />;
       default:
         return <Users />;
     }

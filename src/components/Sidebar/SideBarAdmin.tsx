@@ -5,6 +5,7 @@ import {
   FaDollarSign,
   FaImage,
   FaSignOutAlt,
+  FaAddressBook,
 } from "react-icons/fa";
 
 interface SidebarProps {
@@ -59,6 +60,17 @@ const SidebarAdmin: React.FC<SidebarProps> = ({
           >
             <FaDollarSign className="mr-2" />
             <span>Financeiro</span>
+          </li>
+          <li
+            className={`flex items-center p-4 border-b-2 border-black hover:bg-blue-200 transition ${
+              activeComponent === "Leads"
+                ? "bg-blue-500 rounded-lg border-white text-white"
+                : "text-black"
+            }`}
+            onClick={() => setActiveComponent("Leads")}
+          >
+            <FaAddressBook className="mr-2" />
+            <span>Leads</span>
           </li>
           {/* <li
             className={`flex items-center p-4 border-b-2 border-black hover:bg-blue-200 transition ${

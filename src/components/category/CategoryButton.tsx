@@ -15,14 +15,14 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({
   return (
     <Link href={path} legacyBehavior>
       <div className="flex flex-col items-center justify-center gap-2 p-4 border border-gray-300 rounded-lg bg-white transition-all duration-300 hover:bg-gray-100 shadow-sm hover:shadow-md w-full h-full">
-        <Image
+        {/* <Image
           src={imageSrc}
           alt={name}
           width={80}
           height={80}
           className="object-contain"
-        />
-        <span className="text-black font-jost text-sm font-medium text-center">
+        /> */}
+        <span className="text-black font-jost text-sm font-bold text-center">
           {name}
         </span>
       </div>

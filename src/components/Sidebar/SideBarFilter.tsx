@@ -37,6 +37,10 @@ const Filters: React.FC<FiltersProps> = ({
     "Eletiva",
     "Química",
     "Sociologia",
+    "Atividades Avulsas",
+    "Avaliações",
+    "Painéis",
+    "Planejamentos",
   ];
 
   const priceRanges = [

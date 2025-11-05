@@ -15,14 +15,14 @@ const NavBar = () => {
             Home
           </Link>
           <span className="text-gray-300">|</span>
-          {/* <Link
+          <Link
             className="font-normal text-black text-xl hover:text-blue-500"
             href="/categories"
             aria-current="page"
           >
-            Categorias
-          </Link> */}
-          {/* <span className="text-gray-300">|</span> */}
+            Todos os Produtos
+          </Link>
+          <span className="text-gray-300">|</span>
           <Link
             className="font-normal text-black text-xl hover:text-blue-500"
             href="/AboutCompany"

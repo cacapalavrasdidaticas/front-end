@@ -82,4 +82,24 @@ export const categories = [
     path: "/categories?category=Sociologia",
     image: Sociologia,
   },
+  {
+    name: "Atividades Avulsas",
+    path: "/categories?category=Atividades%20Avulsas",
+    image: Humanidade,
+  },
+  {
+    name: "Avaliações",
+    path: "/categories?category=Avalia%C3%A7%C3%B5es",
+    image: Humanidade,
+  },
+  {
+    name: "Painéis",
+    path: "/categories?category=Pain%C3%A9is",
+    image: Humanidade,
+  },
+  {
+    name: "Planejamentos",
+    path: "/categories?category=Planejamentos",
+    image: Humanidade,
+  },
 ];
