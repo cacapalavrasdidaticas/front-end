@@ -157,7 +157,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({ triggerUpdate }) => {
         }
       }
 
-      console.log("Upload completo");
+   
       toast.success("Produto Cadastrado com sucesso!");
       setLoading(false);
       setIsOpen(false);

@@ -22,7 +22,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   try {
-    console.log("Endpoint encrypt-pdf chamado.");
+  
     const { pdfBase64, password } = req.body;
 
     if (!pdfBase64 || !password) {
@@ -52,17 +52,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     writer.appendPDFPagesFromPDF(inputPath);
     writer.end();
-    console.log("PDF criptografado gerado com sucesso.");
+   
 
     // Lê o PDF criptografado
     const encryptedPdfBuffer = fs.readFileSync(outputPath);
 
     // Remove os arquivos temporários
-    console.log("Removendo arquivos temporários.");
+   
     fs.unlinkSync(inputPath);
     fs.unlinkSync(outputPath);
 
-    console.log("Enviando resposta ao cliente.");
+  
     return res.status(200).json({
       pdfEncryptedBase64: bufferToBase64(encryptedPdfBuffer),
       message: "PDF criptografado com sucesso",

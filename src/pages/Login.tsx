@@ -40,7 +40,7 @@ const Login = () => {
       loginSendEmail({ email: loginData.email });
       toast.success("Código enviado para o seu e-mail!");
       setIsSubmitting(false);
-      console.log(showCodeModal);
+   
     } else if (response && response.status === 401) {
       toast.error(response.data.error || "Acesso não autorizado.");
       setIsSubmitting(false);
