@@ -11,11 +11,13 @@ const AmostraGratis: NextPage = () => {
     nome: "",
     email: "",
     telefone: "",
+    materia: [] as string[],
   });
   const [errors, setErrors] = useState({
     nome: "",
     email: "",
     telefone: "",
+    materia: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +29,9 @@ const AmostraGratis: NextPage = () => {
     );
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -42,11 +46,31 @@ const AmostraGratis: NextPage = () => {
     }
   };
 
+  const handleMateriaChange = (materia: string) => {
+    setFormData((prev) => {
+      const isSelected = prev.materia.includes(materia);
+      return {
+        ...prev,
+        materia: isSelected
+          ? prev.materia.filter((m) => m !== materia)
+          : [...prev.materia, materia],
+      };
+    });
+    // Limpar erro do campo quando o usuário selecionar
+    if (errors.materia) {
+      setErrors((prev) => ({
+        ...prev,
+        materia: "",
+      }));
+    }
+  };
+
   const validateForm = () => {
     const newErrors = {
       nome: "",
       email: "",
       telefone: "",
+      materia: "",
     };
 
     let isValid = true;
@@ -90,6 +114,7 @@ const AmostraGratis: NextPage = () => {
           nome: "",
           email: "",
           telefone: "",
+          materia: [],
         });
       } catch (error: any) {
         console.error("Erro ao enviar dados:", error);
@@ -269,6 +294,59 @@ const AmostraGratis: NextPage = () => {
                         <p className="mt-2 text-sm text-red-500 flex items-center gap-1">
                           <span>•</span>
                           <span>{errors.telefone}</span>
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-3">
+                        Matérias que você leciona?
+                      </label>
+                      <div
+                        className={`max-h-60 overflow-y-auto border-2 rounded-xl p-4 space-y-2 ${
+                          errors.materia
+                            ? "border-red-400 bg-red-50"
+                            : "border-gray-200 bg-gray-50"
+                        }`}
+                      >
+                        {[
+                          "Alfabetização",
+                          "Arte",
+                          "Biologia",
+                          "Ciências",
+                          "Educação Física",
+                          "Eletivas",
+                          "Ensino Religioso",
+                          "Filosofia",
+                          "Física",
+                          "Geografia",
+                          "História",
+                          "Inglês",
+                          "Língua Portuguesa",
+                          "Matemática",
+                          "Química",
+                          "Sociologia",
+                        ].map((materia) => (
+                          <label
+                            key={materia}
+                            className="flex items-center gap-3 cursor-pointer hover:bg-white p-2 rounded-lg transition-colors duration-150"
+                          >
+                            <input
+                              type="checkbox"
+                              checked={formData.materia.includes(materia)}
+                              onChange={() => handleMateriaChange(materia)}
+                              className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 cursor-pointer"
+                            />
+                            <span className="text-base text-gray-700">
+                              {materia}
+                            </span>
+                          </label>
+                        ))}
+                      </div>
+                      {errors.materia && (
+                        <p className="mt-2 text-sm text-red-500 flex items-center gap-1">
+                          <span>•</span>
+                          <span>{errors.materia}</span>
                         </p>
                       )}
                     </div>

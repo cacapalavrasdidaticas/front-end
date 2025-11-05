@@ -141,7 +141,7 @@ const Footer = () => {
             </Link>
             {/* Botão flutuante do WhatsApp */}
             <a
-              href="https://wa.me/5531994716920"
+              href="https://wa.me/553198843918"
               className="whatsapp-button"
               target="_blank"
               rel="noopener noreferrer"
@@ -151,7 +151,7 @@ const Footer = () => {
                 alt="WhatsApp"
                 width={300}
                 height={300}
-                style={{ width: 40, height: 40 }}
+                style={{ width: 60, height: 60 }}
               />
             </a>
 
@@ -160,14 +160,14 @@ const Footer = () => {
                 position: fixed;
                 bottom: 20px;
                 right: 20px;
-                background-color: #ffffff;
+
                 width: 60px;
                 height: 60px;
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
                 z-index: 9999;
               }
             `}</style>
