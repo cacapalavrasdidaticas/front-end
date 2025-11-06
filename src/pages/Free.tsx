@@ -96,6 +96,11 @@ const AmostraGratis: NextPage = () => {
       isValid = false;
     }
 
+    if (formData.materia.length === 0) {
+      newErrors.materia = "Selecione pelo menos uma matéria";
+      isValid = false;
+    }
+
     setErrors(newErrors);
     return isValid;
   };

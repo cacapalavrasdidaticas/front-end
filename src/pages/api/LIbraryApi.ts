@@ -32,6 +32,7 @@ export interface ProspectData {
   nome: string;
   email: string;
   telefone: string;
+  materia: string[];
 }
 
 export const createProspect = async (data: ProspectData) => {
